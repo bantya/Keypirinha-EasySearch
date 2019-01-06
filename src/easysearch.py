@@ -90,9 +90,6 @@ class EasySearch(kp.Plugin):
             section=self.SECTION,
             fallback=self.SECTION)
 
-    # def on_events(self, flags):
-    #     if flags & kp.Events.PACKCONFIG:
-    #         self.on_start()
-
-    def _get_link(self, user_input):
-        pass
+    def on_events(self, flags):
+        if flags & kp.Events.PACKCONFIG:
+            self.on_start()
