@@ -1,24 +1,18 @@
-# Keypirinha: a fast launcher for Windows (keypirinha.com)
-
 import re
 import keypirinha as kp
 import keypirinha_util as kpu
 
 class EasySearch(kp.Plugin):
-
     SECTION = 'engines'
 
-    # g indian people
     REGEX_INPUT = r'(\S+)\s(.+)'
 
-    # Google https://www.google.com/search?q=%s
     REGEX_ENGINES = r'(\S+)\s(.+)'
 
     ITEM_CAT = kp.ItemCategory.URL
 
     def __init__(self):
         super().__init__()
-        self._debug = True
 
     def on_start(self):
         self._gather_engines()
@@ -27,7 +21,6 @@ class EasySearch(kp.Plugin):
         self.on_start()
 
     def on_suggest(self, user_input, items_chain):
-        # urllib.parse.quote_plus(search_terms))
         input = re.search(self.REGEX_INPUT, user_input)
 
         if input is None:
@@ -73,7 +66,6 @@ class EasySearch(kp.Plugin):
         if item.category() != self.ITEM_CAT:
             return
 
-        # kpu.execute_default_action(self, item, action)
         kpu.web_browser_command(
             private_mode=False,
             new_window=False,
