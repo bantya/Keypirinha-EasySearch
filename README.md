@@ -3,15 +3,14 @@
 This is EasySearch, a plugin for the
 [Keypirinha](http://keypirinha.com) launcher.
 
-**TODO:** write a brief description of this package. Optionally add a
-screenshot.
+This package provides a short way to search the internet, just like WebSearch package but simpler.
+
+![EasySearch usage](./images/2019-01-08_00-34-29.gif "EasySearch usage")
 
 
 ## Download
 
-**TODO:** indicate where the latest `.keypirinha-package` file can be
-downloaded. For example a URL to the `releases` list like:
-https://github.com/bantya/Keypirinha-EasySearch/releases
+Download the plugin file from [here](https://github.com/bantya/Keypirinha-EasySearch/releases).
 
 
 ## Install
@@ -26,42 +25,71 @@ move it to the `InstalledPackage` folder located at:
 
 
 ## Usage
+1. Open the EasySearch config file.
 
-**TODO:** list the items, if any, inserted to the Catalog by the plugin(s) of
-this package. Some plugins only make suggestions, in which case a description of
-what kind of suggestions are to be expected by the user may help.
+![Keypirinha configuration](./images/2019-01-07_22-04-13.jpg "Keypirinha configuration")
+
+2. Add the desired web search URLs.
+* The syntax for the URL entry should be:
+    ```
+    [keyword] = [Search Engine name] [Search Engine URL with %s as a search term]
+
+    e.g.
+
+    g = Google https://www.google.com/search?q=%s
+    php = PHP.net http://php.net/manual-lookup.php?pattern=%s
+    gh = Github https://github.com/search?utf8=%E2%9C%93&q=%s
+    ```
+* All the fields in the above syntax are REQUIRED (, though the name field is not currently used).
+
+![EasySearch config file](./images/2019-01-07_22-06-10.jpg "EasySearch config file")
+
+3. Invoke Keypirinha and put the search engine keyword and the search term.
+* The syntax for the usage should be:
+    ```
+    [keyword]  [Search term]
+
+    e.g.
+
+    g  keypirinha launcher  -> searches 'keypirinha launcher' on google
+    gh  bantya/Keypirinha-EasySearch  -> searches 'bantya/Keypirinha-EasySearch' on github
+    ```
+![Keypirinha invoke](./images/2019-01-07_22-02-09.jpg "Keypirinha invoke")
+
+
+## Attention
+Please keep in mind that while using the plugin, **double spaces has to be entered** between the search engine keyword and search term to diffferentiate. It **won't work** for a single space.
 
 
 ## Change Log
 
-**TODO:** describe notable changes for each release. Below is a template for
-version 1.0.
+### v1.0.0
+* Updated README and added screenshots.
+* Bumped the version to 1.0.0
 
-### v1.0
+### v0.0.3
+* Removed debug and comments.
 
-* Added foo item
-* Fixed bug that was doing bad things when item "bar" was selected
+### v0.0.2
+* Included the ability to reload the configuration after any changes in EasySearch config file.
+
+### v0.0.1
+* Initial commit.
 
 
 ## License
-
-**TODO:** recommended section. Below is an example that goes with the default
-LICENSE file (MIT license). Do not forget to add your name in the `LICENSE`
-file!
 
 This package is distributed under the terms of the MIT license.
 
 
 ## Credits
 
-**TODO:** optional section.
+_Waiting for the first name_.
 
 
 ## Contribute
 
-**TODO:** optional section. Below is a template example, based on the one found
-in Keypirinha's Packages repository.
-
+This is how to contribute:
 1. Check for open issues or open a fresh issue to start a discussion around a
    feature idea or a bug.
 2. Fork this repository on GitHub to start making your changes to the **dev**
