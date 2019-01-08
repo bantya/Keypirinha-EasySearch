@@ -3,18 +3,22 @@ import keypirinha as kp
 import keypirinha_util as kpu
 
 class EasySearch(kp.Plugin):
-    SECTION = 'engines'
+    SECTION_ENGINE = 'engines'
+
+    SECTION_MAIN = 'main'
 
     REGEX_INPUT = r'(\S+)\s(.+)'
 
     REGEX_ENGINES = r'(\S+)\s(.+)'
 
-    ITEM_CAT = kp.ItemCategory.URL
+    ITEM_CAT = kp.ItemCategory.USER_BASE + 1
 
     def __init__(self):
         super().__init__()
+        self._debug = True
 
     def on_start(self):
+        self._load_settings()
         self._gather_engines()
 
     def on_catalog(self):
@@ -28,28 +32,29 @@ class EasySearch(kp.Plugin):
 
         for engine in self.engines:
             if engine == input.group(1):
-                setting = self._get_setting(engine)
+                setting = self.settings.get_stripped(engine, section = self.SECTION_ENGINE, fallback = '')
                 url = re.search(self.REGEX_ENGINES, setting)
 
                 if len(url.groups()) == 2:
-                    name, link = url.groups()
+                    name, target = url.groups()
                     term = input.group(2)
-                    target = link
-                    link = link.replace("%s", term)
-                    target = target.replace("%s", term.strip())
+                    name = name.strip().replace("_", " ")
+                    target = target.strip().format(q=term.strip())
 
-                    suggestion = self._set_suggestion(link, target, name)
-                    self.set_suggestions(suggestion)
+                    self.dbg(target)
+                    suggestion = self._set_suggestion(name, target)
+                    self.set_suggestions(suggestion, kp.Match.FUZZY, kp.Sort.TARGET_ASC)
 
-    def _set_suggestion(self, corrected_url, target, name):
+    def _set_suggestion(self, name, target):
         return [
             self.create_item(
-                category=self.ITEM_CAT,
-                label=corrected_url,
-                short_desc=target,
-                target=target,
-                args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.IGNORE
+                category = self.ITEM_CAT,
+                label = name + ' : ' + target,
+                short_desc = target,
+                target = target,
+                args_hint = kp.ItemArgsHint.FORBIDDEN,
+                hit_hint = kp.ItemHitHint.IGNORE,
+                loop_on_suggest = True
             )
         ]
 
@@ -67,20 +72,17 @@ class EasySearch(kp.Plugin):
             return
 
         kpu.web_browser_command(
-            private_mode=False,
-            new_window=False,
-            url=item.target(),
-            execute=True
+            private_mode = self.settings.get_bool('private_mode', section = self.SECTION_MAIN, fallback = False),
+            new_window = self.settings.get_bool('new_window', section = self.SECTION_MAIN, fallback = False),
+            url = item.target(),
+            execute = True
         )
 
-    def _gather_engines(self):
-        self.engines = self.load_settings().keys(self.SECTION)
+    def _load_settings(self):
+        self.settings = self.load_settings()
 
-    def _get_setting(self, setting):
-        return self.load_settings().get_stripped(
-            setting,
-            section=self.SECTION,
-            fallback=self.SECTION)
+    def _gather_engines(self):
+        self.engines = self.settings.keys(self.SECTION_ENGINE)
 
     def on_events(self, flags):
         if flags & kp.Events.PACKCONFIG:

@@ -32,22 +32,22 @@ move it to the `InstalledPackage` folder located at:
 2. Add the desired web search URLs.
 * The syntax for the URL entry should be:
     ```
-    [keyword] = [Search Engine name] [Search Engine URL with %s as a search term]
+    [distinct keyword] = [Search Engine name] [Search Engine URL with %s as a search term]
 
     e.g.
 
-    g = Google https://www.google.com/search?q=%s
-    php = PHP.net http://php.net/manual-lookup.php?pattern=%s
-    gh = Github https://github.com/search?utf8=%E2%9C%93&q=%s
+    g = Google https://www.google.com/search?q={q}
+    php = PHP.net http://php.net/manual-lookup.php?pattern={q}
+    gh = Github https://github.com/search?utf8=%E2%9C%93&q={q}
     ```
-* All the fields in the above syntax are REQUIRED (, though the name field is not currently used).
+* All the fields in the above syntax are REQUIRED.
 
 ![EasySearch config file](./images/2019-01-07_22-06-10.jpg "EasySearch config file")
 
 3. Invoke Keypirinha and put the search engine keyword and the search term.
 * The syntax for the usage should be:
     ```
-    [keyword]  [Search term]
+    [keyword] [Search term (can contain spaces)]
 
     e.g.
 
@@ -57,11 +57,19 @@ move it to the `InstalledPackage` folder located at:
 ![Keypirinha invoke](./images/2019-01-07_22-02-09.jpg "Keypirinha invoke")
 
 
-## Attention
-Please keep in mind that while using the plugin, **double spaces has to be entered** between the search engine keyword and search term to diffferentiate. It **won't work** for a single space.
+## Quirks
+As the suggestions are presented according to the **fuzzy search**, please keep in mind that the search-keyword MUST NOT be unrecognizably different than the search engine name.
+
+i.e. Setting a keyword `xyz` for `Github` won't work, (Obviously!) but `gh` may work.
 
 
 ## Change Log
+
+### v1.1.0
+* `private_mode` and `new_window` settings added.
+* Multiword name now works. Has to be separated by an underscore ( _ ).
+* Single space now works for all the cases.
+* Some refactoring.
 
 ### v1.0.0
 * Updated README and added screenshots.
