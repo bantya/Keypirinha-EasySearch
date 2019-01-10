@@ -27,7 +27,7 @@ move it to the `InstalledPackage` folder located at:
 ## Usage
 1. Open the EasySearch config file.
 
-![Keypirinha configuration](./images/2019-01-07_22-04-13.jpg "Keypirinha configuration")
+![Keypirinha configuration](./images/2019-01-09_22-04-13.jpg "Keypirinha configuration")
 
 2. Add the desired web search URLs.
 * The syntax for the URL entry should be:
@@ -42,7 +42,7 @@ move it to the `InstalledPackage` folder located at:
     ```
 * All the fields in the above syntax are REQUIRED.
 
-![EasySearch config file](./images/2019-01-07_22-06-10.jpg "EasySearch config file")
+![EasySearch config file](./images/2019-01-09_22-06-10.jpg "EasySearch config file")
 
 3. Invoke Keypirinha and put the search engine keyword and the search term.
 * The syntax for the usage should be:
@@ -54,7 +54,7 @@ move it to the `InstalledPackage` folder located at:
     g  keypirinha launcher  -> searches 'keypirinha launcher' on google
     gh  bantya/Keypirinha-EasySearch  -> searches 'bantya/Keypirinha-EasySearch' on github
     ```
-![Keypirinha invoke](./images/2019-01-07_22-02-09.jpg "Keypirinha invoke")
+![Keypirinha invoke](./images/2019-01-09_22-02-09.jpg "Keypirinha invoke")
 
 
 ## Quirks

@@ -15,7 +15,6 @@ class EasySearch(kp.Plugin):
 
     def __init__(self):
         super().__init__()
-        self._debug = True
 
     def on_start(self):
         self._load_settings()
@@ -41,7 +40,6 @@ class EasySearch(kp.Plugin):
                     name = name.strip().replace("_", " ")
                     target = target.strip().format(q=term.strip())
 
-                    self.dbg(target)
                     suggestion = self._set_suggestion(name, target)
                     self.set_suggestions(suggestion, kp.Match.FUZZY, kp.Sort.TARGET_ASC)
 
@@ -61,9 +59,9 @@ class EasySearch(kp.Plugin):
     def _set_error(self, msg):
         return [
             self.create_error_item(
-                label="Error",
-                short_desc=msg,
-                target=error
+                label = "Error",
+                short_desc = msg,
+                target = error
             )
         ]
 
