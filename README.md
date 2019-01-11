@@ -3,7 +3,7 @@
 This is EasySearch, a plugin for the
 [Keypirinha](http://keypirinha.com) launcher.
 
-This package provides a short way to search the internet, just like WebSearch package but simpler.
+This package provides a easiest and flexible way to search the internet, just like WebSearch package but even simpler.
 
 ![EasySearch usage](./images/2019-01-08_00-34-29.gif "EasySearch usage")
 
@@ -38,11 +38,11 @@ move it to the `InstalledPackage` folder located at:
 
     g = Google https://www.google.com/search?q={q}
     php = PHP.net http://php.net/manual-lookup.php?pattern={q}
-    gh = Github https://github.com/search?utf8=%E2%9C%93&q={q}
+    gh = Github https://github.com/search?utf8=✓&q={q}
     ```
 * All the fields in the above syntax are REQUIRED.
 
-![EasySearch config file](./images/2019-01-09_22-06-10.jpg "EasySearch config file")
+![EasySearch config file](./images/2019-01-12_01-30-49.jpg "EasySearch config file")
 
 3. Invoke Keypirinha and put the search engine keyword and the search term.
 * The syntax for the usage should be:
@@ -54,35 +54,30 @@ move it to the `InstalledPackage` folder located at:
     g  keypirinha launcher  -> searches 'keypirinha launcher' on google
     gh  bantya/Keypirinha-EasySearch  -> searches 'bantya/Keypirinha-EasySearch' on github
     ```
-![Keypirinha invoke](./images/2019-01-09_22-02-09.jpg "Keypirinha invoke")
+![Keypirinha invoke](./images/2019-01-12_01-13-08.jpg "Keypirinha invoke")
 
 
-## Quirks
-As the suggestions are presented according to the **fuzzy search**, please keep in mind that the search-keyword MUST NOT be unrecognizably different than the search engine name.
+## What's new ?
 
-i.e. Setting a keyword `xyz` for `Github` won't work, (Obviously!) but `gh` may work.
+### https for non-https URL
+If the URL protocol is just `http`, then along with it an `https` URL is also generated.
+![https URL](./images/2019-01-12_01-31-12.jpg "https URL")
+
+
+### Actions
+Starting from `v2.0.0`, following actions are available for any generated URL.
+
+![URL actions](./images/2019-01-12_01-13-37.jpg "URL actions")
+
+* **Copy link**: Copy the URL to the clipboard.
+* **Open**: Open the URL in the browser.
+* **Private mode**: Open the URL in new browser window.
+* **New windows**: Open the URL in the private mode.
 
 
 ## Change Log
 
-### v1.1.0
-* `private_mode` and `new_window` settings added.
-* Multiword name now works. Has to be separated by an underscore ( _ ).
-* Single space now works for all the cases.
-* Some refactoring.
-
-### v1.0.0
-* Updated README and added screenshots.
-* Bumped the version to 1.0.0
-
-### v0.0.3
-* Removed debug and comments.
-
-### v0.0.2
-* Included the ability to reload the configuration after any changes in EasySearch config file.
-
-### v0.0.1
-* Initial commit.
+Please check the [CHANGELOG](./CHANGELOG.md) file.
 
 
 ## License
@@ -104,3 +99,7 @@ This is how to contribute:
    branch.
 3. Send a pull request.
 4. Add yourself to the *Contributors* section below (or create it if needed)!
+
+## And what?
+
+Thanks to all.
