@@ -41,14 +41,13 @@ class EasySearch(kp.Plugin):
 
         for engine in self.engines:
             if engine == input.group(1):
-                setting = self.settings.get_stripped(engine, section = self.SECTION_ENGINE, fallback = '')
+                setting = self.settings.get_stripped(engine, self.SECTION_ENGINE)
                 url = re.search(self.REGEX_ENGINES, setting)
 
                 if len(url.groups()) == 2:
                     name, target = url.groups()
                     term = input.group(2)
                     name = name.strip().replace("_", " ")
-
                     target = target.strip().format(q=term.strip())
 
                     suggestions.append(self._set_suggestion(self._create_label(engine, name, term), target))
@@ -65,26 +64,18 @@ class EasySearch(kp.Plugin):
         if item.category() != self.ITEM_EASYSEARCH:
             return
 
+        target = item.target()
+        private_mode = self.settings.get_bool('private_mode', self.SECTION_MAIN, False)
+        new_window = self.settings.get_bool('new_window', self.SECTION_MAIN, False)
+
         if action and action.name() == "copy":
-            kpu.set_clipboard(item.target())
+            kpu.set_clipboard(target)
         elif action and action.name() == "private":
-            self._open_browser(
-                item.target(),
-                True,
-                self.settings.get_bool('new_window', section = self.SECTION_MAIN, fallback = False),
-            )
+            self._open_browser(target, True, new_window)
         elif action and action.name() == "new":
-            self._open_browser(
-                item.target(),
-                self.settings.get_bool('private_mode', section = self.SECTION_MAIN, fallback = False),
-                True,
-            )
+            self._open_browser(target, private_mode, True)
         else:
-            self._open_browser(
-                item.target(),
-                self.settings.get_bool('private_mode', section = self.SECTION_MAIN, fallback = False),
-                self.settings.get_bool('new_window', section = self.SECTION_MAIN, fallback = False),
-            )
+            self._open_browser(target, private_mode, new_window)
 
     def _open_browser(self, target, private_mode, new_window):
         kpu.web_browser_command(
@@ -119,9 +110,9 @@ class EasySearch(kp.Plugin):
 
     def _set_action(self, name, label, desc):
         return self.create_action(
-            name=name,
-            label=label,
-            short_desc=desc
+            name = name,
+            label = label,
+            short_desc = desc
         )
 
     def _load_settings(self):
