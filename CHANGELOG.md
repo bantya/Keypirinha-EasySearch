@@ -1,5 +1,8 @@
 ## Change Log
 
+### v2.0.1
+* Some refactorings and code simplifications.
+
 ### v2.0.0
 * Now you can use any random keyword possible.
 * Added `https` support for `non-https` sites.

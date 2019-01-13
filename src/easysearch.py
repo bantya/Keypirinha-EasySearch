@@ -48,7 +48,7 @@ class EasySearch(kp.Plugin):
                     name, target = url.groups()
                     term = input.group(2)
                     name = name.strip().replace("_", " ")
-                    target = target.strip().format(q=term.strip())
+                    target = target.strip().format(q = term.strip())
 
                     suggestions.append(self._set_suggestion(self._create_label(engine, name, term), target))
 
