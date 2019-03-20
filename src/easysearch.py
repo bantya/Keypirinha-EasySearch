@@ -77,6 +77,16 @@ class EasySearch(kp.Plugin):
         else:
             self._open_browser(target, private_mode, new_window)
 
+    def on_activated(self):
+        print('----------')
+
+    def on_deactivated(self):
+        print('----------')
+
+    def on_events(self, flags):
+        if flags & kp.Events.PACKCONFIG:
+            self.on_start()
+
     def _open_browser(self, target, private_mode, new_window):
         kpu.web_browser_command(
             private_mode = private_mode,
@@ -120,7 +130,3 @@ class EasySearch(kp.Plugin):
 
     def _gather_engines(self):
         self.engines = self.settings.keys(self.SECTION_ENGINE)
-
-    def on_events(self, flags):
-        if flags & kp.Events.PACKCONFIG:
-            self.on_start()
