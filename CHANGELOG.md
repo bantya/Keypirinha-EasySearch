@@ -1,5 +1,9 @@
 ## Change Log
 
+### v2.0.4
+
+- Corrected package-name typo.
+
 ### v2.0.3
 
 - Added PackageControl section in README.
