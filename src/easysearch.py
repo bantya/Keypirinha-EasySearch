@@ -192,19 +192,6 @@ class EasySearch(kp.Plugin):
     def _save_json(self, data):
         with open(self.history_file, 'w') as outfile:
             json.dump(data, outfile)
-    def _read_json(self):
-        if not os.path.isfile(self.history_file):
-            self._save_json(self._get_boilerplate())
-
-            return self._get_boilerplate()
-
-        try:
-            with open(self.history_file) as json_file:
-                return json.load(json_file)
-        except json.decoder.JSONDecodeError:
-            self._save_json({})
-
-            return {}
 
     def _create_history(self, item):
         if self.keep_history != True:
@@ -228,30 +215,11 @@ class EasySearch(kp.Plugin):
 
             for idx, entry in enumerate(data["data"]):
                 if entry['url'] == item.target():
-                    entry['count'] += 1
-                    entry['last_accessed'] = self._get_date()
-
-                    file.seek(0)
-                    json.dump(data, file, indent = 4)
-                    file.truncate()
+                    entry = self._update_history(file, data, entry)
 
                     return entry
 
-            data["data"].insert(
-                0,
-                self._history_template(
-                    self._get_uuid(),
-                    self._get_date(),
-                    self._get_date(),
-                    item.target(),
-                    input.group(1),
-                    input.group(2)
-                )
-            )
-
-            file.seek(0)
-            json.dump(data, file, indent = 4)
-            file.truncate()
+            data = self._add_history(file, data, item, input)
 
     def _history_template(self, id, date, last_accessed, url, engine, term):
         return {
@@ -265,7 +233,6 @@ class EasySearch(kp.Plugin):
         }
 
     def _get_date(self):
-
         return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
     def _get_uuid(self):
@@ -321,6 +288,35 @@ class EasySearch(kp.Plugin):
                 name.strip().replace("_", " "),
                 target
             ]
+
+    def _add_history(self, file, data, item, input):
+        data["data"].insert(
+            0,
+            self._history_template(
+                self._get_uuid(),
+                self._get_date(),
+                self._get_date(),
+                item.target(),
+                input.group(1),
+                input.group(2)
+            )
+        )
+
+        file.seek(0)
+        json.dump(data, file, indent = 4)
+        file.truncate()
+
+        return data
+
+    def _update_history(self, file, data, entry):
+        entry['count'] += 1
+        entry['last_accessed'] = self._get_date()
+
+        file.seek(0)
+        json.dump(data, file, indent = 4)
+        file.truncate()
+
+        return entry
 
     def _delete_entry(self, item):
         with open(self.history_file, 'r+') as file:
