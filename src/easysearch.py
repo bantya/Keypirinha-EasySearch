@@ -133,12 +133,6 @@ class EasySearch(kp.Plugin):
         else:
             self._open_browser(item, private_mode, new_window)
 
-    def on_activated(self):
-        print('----------')
-
-    def on_deactivated(self):
-        print('----------')
-
     def on_events(self, flags):
         if flags & kp.Events.PACKCONFIG:
             self.on_start()
