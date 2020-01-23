@@ -2,6 +2,7 @@ import os
 import re
 import json
 import datetime
+import urllib.parse
 import keypirinha as kp
 import keypirinha_util as kpu
 
@@ -88,7 +89,7 @@ class EasySearch(kp.Plugin):
                 if len(url_group) == 2:
                     name, target = url_group
                     term = input.group(2)
-                    target = target.strip().format(q = term.strip())
+                    target = target.strip().format(q = urllib.parse.quote(term).strip())
 
                     suggestions.append(
                         self._set_suggestion(
